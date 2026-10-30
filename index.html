@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Maniac Darts</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>🦋 YOU MANIAC DARTS 🍺</h1>
+<div class="sub">click the board to throw · 3 darts · best hit wins the picture</div>
+<div class="wrap">
+  <canvas id="c" width="400" height="400"></canvas>
+  <div class="side">
+    <div class="stat" id="info">Darts left: 3 · Score: 0</div>
+    <img id="pic" class="pic" alt="zone picture">
+    <div class="stat" id="cap">Throw a dart! 🦋</div>
+    <button id="again">PLAY AGAIN 🍺</button>
+    <div class="sub" style="margin-top:12px">Swap a zone’s picture with your own:</div>
+    <div class="zones" id="zones"></div>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
