@@ -63,4 +63,39 @@ zones.forEach(function(z){
   f.onchange=function(){var r=new FileReader();r.onload=function(){z.img=r.result;pic.src=z.img};if(f.files[0])r.readAsDataURL(f.files[0])};
   l.appendChild(f);zdiv.appendChild(l)
 });
+// Share result + best-hit photo on X
+function photoBlob(z,cb){
+  var im=new Image();
+  im.onload=function(){
+    var s=600,t=document.createElement('canvas');t.width=t.height=s;
+    var g=t.getContext('2d');
+    var m=Math.min(im.width,im.height),sx=(im.width-m)/2,sy=(im.height-m)/2;
+    g.drawImage(im,sx,sy,m,m,0,0,s,s);
+    t.toBlob(cb,'image/png');
+  };
+  im.src=z.img;
+}
+document.getElementById('share').onclick=function(){
+  if(left>0){alert('Throw all 3 darts first! 🎯');return}
+  var z=zones[best];
+  var url='https://wetrendingteam.github.io/You-Maniac-Dart-Game/';
+  var text='I scored '+score+' points in You Maniac Darts! 🦋🍺 Best hit: '+z.n+' ('+z.p+' pts). Can you beat me? #WETrendingTeam #WILLIAMESTHERE';
+  var w=null;
+  var canShareFiles=navigator.canShare&&navigator.canShare({files:[new File([''],'a.png',{type:'image/png'})]});
+  if(!canShareFiles)w=window.open('about:blank','_blank');
+  photoBlob(z,function(blob){
+    var file=new File([blob],'my-best-hit.png',{type:'image/png'});
+    if(canShareFiles){
+      navigator.share({files:[file],text:text+' '+url}).catch(function(){});
+    }else{
+      var link='https://twitter.com/intent/tweet?text='+encodeURIComponent(text)+'&url='+encodeURIComponent(url);
+      var done=function(msg){cap.textContent=msg;if(w)w.location=link};
+      if(navigator.clipboard&&window.ClipboardItem){
+        navigator.clipboard.write([new ClipboardItem({'image/png':blob})])
+          .then(function(){done('📋 Photo copied! Press Ctrl+V in the X post box')})
+          .catch(function(){done('Could not copy the photo')});
+      }else{done('Could not copy the photo')}
+    }
+  });
+};
 reset();draw();
