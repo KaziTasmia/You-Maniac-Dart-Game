@@ -79,7 +79,7 @@ document.getElementById('share').onclick=function(){
   if(left>0){alert('Throw all 3 darts first! 🎯');return}
   var z=zones[best];
   var url='https://wetrendingteam.github.io/You-Maniac-Dart-Game/';
-  var text='I scored '+score+' points in You Maniac Darts! 🦋🍺 Best hit: '+z.n+' ('+z.p+' pts). Can you beat me?;
+  var text='I scored '+score+' points in You Maniac Darts! 🦋🍺 Best hit: '+z.n+' ('+z.p+' pts). Can you beat me?';
   var w=null;
   var canShareFiles=navigator.canShare&&navigator.canShare({files:[new File([''],'a.png',{type:'image/png'})]});
   if(!canShareFiles)w=window.open('about:blank','_blank');
